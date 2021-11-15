@@ -24,6 +24,7 @@ export async function collectProjectAccess(
     j1qlWorkQueue: PQueue;
     j1qlConcurrency: number;
     filterByRole: Set<string>;
+    includePermissions: boolean;
   }
 ) {
   const context: CollectProjectAccessContext = {
@@ -71,7 +72,9 @@ export async function collectProjectAccess(
    */
   workQueue
     .add(async () => {
-      iamBindingLookup = await collectIamBindingRelationships(context);
+      iamBindingLookup = await collectIamBindingRelationships(context, {
+        includePermissions: options.includePermissions
+      });
       logger.info(
         {
           folderBindingCount: Object.values(

@@ -1,12 +1,18 @@
-# Google Cloud Project Access
+# JupiterOne example for analyzing Google Cloud Project access
 
-This sample program executes multiple JupiterOne queries to collect enough
-information to determine effective access to each Google Cloud Project.
+This sample program executes multiple [JupiterOne](https://jupiterone.com/)
+queries to collect enough information to determine effective access to each
+Google Cloud Project. This program finds all of the ancestor folders
+and organizations associated with each project. The IAM bindings at the
+project, folder, and organization level are used to compute the consolidated
+list of IAM bindings associated with each binding.
 
-## Prereq
+## Prerequisites
 
 - Clone this repo via
   `git clone git@github.com:philidem/j1-example-gcp-project-access.git`
+
+- Change working directory to the git repo that was just cloned.
 
 - Create a `.env` project in your current directory with the following content:
 
@@ -30,6 +36,9 @@ docker build -f Dockerfile -t j1-example-gcp-project-access .
 docker run --rm -it -w `pwd` -v `pwd`:`pwd` j1-example-gcp-project-access
 ```
 
+By default the output will be written to `gcp-project-access.json` in the
+current working directory.
+
 ## How to run from source code with Node.js runtime
 
 - Install [node](https://nodejs.org) and [yarn](https://yarnpkg.com/).
@@ -48,12 +57,30 @@ node -r source-map-support/register ./dist/src/cli
 
 ## Example usage
 
+**NOTE:** Adjust the examples below to use the locally built docker image or the
+compiled JavaScript code.
+
+**Print help for command:**
+
+```sh
+j1-example-gcp-project-access --help
+```
+
 **Run and only include IAM bindings with given roles:**
 
 ```sh
 j1-example-gcp-project-access \
   --role roles/owner \
-  --role roles/resourcemanager.organizationAdmin \
+  --role roles/resourcemanager.organizationAdmin
+```
+
+**Run but do not include the permissions in the IAM bindings:**
+
+Excluding permissions will improve performance and is helpful if you only
+need the roles.
+
+```sh
+j1-example-gcp-project-access --no-permissions
 ```
 
 **Run and print detailed report:**
@@ -178,13 +205,11 @@ FIND google_cloud_folder AS f
 
 - Build an in-memory graph that allows you to easily determine the organization
   and all parent folders associated with a `google_cloud_project`.
-- Store an in-memory lookup table of the `google_iam_binding` entities for
-  each `google_cloud_organization`, `google_cloud_folder`, and
-  `google_cloud_project`
+- Store an in-memory lookup table of the `google_iam_binding` entities for each
+  `google_cloud_organization`, `google_cloud_folder`, and `google_cloud_project`
 
 For each `google_cloud_project`:
 
 - Find all IAM bindings associated with folders for given project
 - Find all IAM bindings associated with organization for given project
 - Find all IAM bindings associated directly with project
-

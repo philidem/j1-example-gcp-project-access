@@ -7,7 +7,10 @@ import {
 } from './types';
 
 export async function collectIamBindingRelationships(
-  context: CollectProjectAccessContext
+  context: CollectProjectAccessContext,
+  options: {
+    includePermissions: boolean;
+  }
 ) {
   const otherEntityTypes: IamBindingOtherEntityType[] = [
     'google_cloud_organization',
@@ -34,6 +37,7 @@ export async function collectIamBindingRelationships(
 
   await pMap(otherEntityTypes, async (otherEntityType) => {
     await collectIamBindingRelationhipsForType(context, {
+      includePermissions: options.includePermissions,
       otherEntityType,
       each(item) {
         const lookupForType = lookup[otherEntityType];

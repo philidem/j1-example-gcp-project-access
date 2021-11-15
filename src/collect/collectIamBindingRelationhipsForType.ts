@@ -7,6 +7,7 @@ import {
 export async function collectIamBindingRelationhipsForType(
   context: CollectProjectAccessContext,
   options: {
+    includePermissions: boolean;
     otherEntityType: IamBindingOtherEntityType;
     each: (item: {
       _id: IamBindingEntityId;
@@ -24,7 +25,7 @@ export async function collectIamBindingRelationhipsForType(
     RETURN
       b._id,
       b.members,
-      b.permissions,
+      ${options.includePermissions ? 'b.permissions,' : ''}
       b.role,
       o._id
     `;

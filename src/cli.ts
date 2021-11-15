@@ -20,38 +20,45 @@ type EnvConfig = {
 
 async function run() {
   const argv = yargs
-    .option('--role', {
+    .option('role', {
       description: 'Roles to filter by (repeatable)',
       type: 'array',
     })
-    .option('--config', {
+    .option('config', {
       description: 'Config file',
       default: '.env',
       type: 'string',
     })
-    .option('-f', {
+    .option('out', {
+      alias: 'o',
       description: 'Output file',
       default: 'gcp-project-access.json',
       type: 'string',
     })
-    .option('--log-level', {
+    .option('log-level', {
       description: 'Minimum level to log',
       default: 'warn',
       type: 'string',
       choices: ['trace', 'info', 'warn', 'error'],
     })
-    .option('--report', {
+    .option('report', {
       description: 'Print report',
+      default: false,
+      type: 'boolean',
+    })
+    .option('permissions', {
+      description: 'Include permissions from IAM binding?',
       default: false,
       type: 'boolean',
     })
     .usage('$0 [options]')
     .help().argv as {
     role?: string[];
-    f?: string;
+    out?: string;
     configFile?: string;
     report?: boolean;
     logLevel?: 'trace' | 'info' | 'warn' | 'error';
+    permissions?: boolean;
   };
 
   const envFile = argv.configFile!;
@@ -106,10 +113,11 @@ async function run() {
     j1qlConcurrency: 5,
     j1qlWorkQueue,
     filterByRole,
+    includePermissions: argv.permissions === true,
   });
 
   await fs.writeFile(
-    argv.f!,
+    argv.out!,
     JSON.stringify(
       {
         filterByRole: [...filterByRole],
