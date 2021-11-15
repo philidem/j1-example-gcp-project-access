@@ -30,7 +30,7 @@ J1_API_KEY = INSERT_YOUR_J1_API_KEY_HERE
 docker build -f Dockerfile -t j1-example-gcp-project-access .
 ```
 
-- Run the command using the docker image you just build:
+- Run the command using the docker image you just built:
 
 ```sh
 docker run --rm -it -w `pwd` -v `pwd`:`pwd` j1-example-gcp-project-access
