@@ -5,7 +5,7 @@ queries to collect enough information to determine effective access to each
 Google Cloud Project. This program finds all of the ancestor folders
 and organizations associated with each project. The IAM bindings at the
 project, folder, and organization level are used to compute the consolidated
-list of IAM bindings associated with each binding.
+list of IAM bindings associated with each project.
 
 ## Prerequisites
 
