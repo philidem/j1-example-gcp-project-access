@@ -1,0 +1,37 @@
+{
+  "name": "temp-gcp-project-access",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint --ext .ts,.js .",
+    "format": "yarn format:imports && yarn format:prettier",
+    "format:imports": "yarn rewrite-imports --dir .",
+    "format:prettier": "prettier --write '**/*.{js,jsx,ts,tsx,md,json,yaml}'",
+    "test": "echo \"No tests\"",
+    "clean": "rm -rf ./dist .tsc",
+    "compile": "ttsc -p tsconfig.dist.json",
+    "build": "yarn clean && yarn compile && cp package.json yarn.lock ./dist",
+    "codegen": "./tools/bin/download-graphql-schema.sh && yarn graphql-codegen --config codegen.yml"
+  },
+  "dependencies": {
+    "bunyan": "^1.8.15",
+    "bunyan-format": "^0.2.1",
+    "chalk": "^4.1.2",
+    "dotenv": "^10.0.0",
+    "graphql": "^16.0.1",
+    "graphql-tag": "^2.12.6",
+    "node-fetch": "^2",
+    "p-map": "^4.0.0",
+    "p-queue": "^6",
+    "source-map-support": "^0.5.20",
+    "yargs": "^17.2.1"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^2.2.2",
+    "@graphql-codegen/typescript": "^2.3.1",
+    "@jupiterone/typescript-tools": "^15.0.0",
+    "@types/bunyan": "^1.8.7",
+    "@types/node-fetch": "^2",
+    "type-fest": "^2.5.3"
+  }
+}

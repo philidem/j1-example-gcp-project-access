@@ -1,0 +1,10 @@
+.tsc/
+dist/
+node_modules/
+work/
+codegen/
+.yalc/
+yalc.lock
+.env
+*.bak
+gcp-project-access.json

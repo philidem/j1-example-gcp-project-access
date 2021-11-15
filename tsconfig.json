@@ -1,0 +1,11 @@
+{
+  "extends": "./node_modules/@jupiterone/typescript-tools/config/typescript-node12",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": ".tsc/dist/",
+    "baseUrl": ".",
+    "incremental": true
+  },
+  "include": ["bin/**/*.ts", "src/**/*.ts", "*.config.js"],
+  "exclude": ["**/*.bak/**/*", "**/dist/**/*"]
+}

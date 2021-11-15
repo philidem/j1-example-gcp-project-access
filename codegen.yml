@@ -1,0 +1,6 @@
+overwrite: true
+schema: ./work/j1-schema.graphql
+generates:
+  ./src/codegen/j1-graphql-types.ts:
+    plugins:
+      - typescript
