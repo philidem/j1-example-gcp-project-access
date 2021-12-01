@@ -201,6 +201,19 @@ FIND google_cloud_folder AS f
     p.displayName
 ```
 
+**Fetch the organization/project hierarchy:**
+
+```j1ql
+FIND google_cloud_organization AS o
+  THAT HAS >> google_cloud_project AS p
+  RETURN
+    o._id,
+    o.displayName,
+    p._id,
+    p.projectId,
+    p.displayName
+```
+
 **After all of the prerequisite data is fetched:**
 
 - Build an in-memory graph that allows you to easily determine the organization
