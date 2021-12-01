@@ -21,7 +21,7 @@ export async function collectIamBindingRelationhipsForType(
   const { j1Client } = context;
   const j1ql = `
     FIND google_iam_binding AS b
-    THAT ALLOWS >> ${options.otherEntityType} AS o
+    THAT (ALLOWS|HAS) >> ${options.otherEntityType} AS o
     RETURN
       b._id,
       b.members,
